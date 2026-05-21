@@ -3,6 +3,7 @@ package com.emlocoding.QuizApp.service;
 import com.emlocoding.QuizApp.dao.QuestionDao;
 import com.emlocoding.QuizApp.dao.QuizDao;
 import com.emlocoding.QuizApp.model.QuestionModel;
+import com.emlocoding.QuizApp.model.QuestionWrapper;
 import com.emlocoding.QuizApp.model.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,17 @@ public class QuizService {
         quizDao.save(quiz);
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
+        java.util.Optional<Quiz> quiz = quizDao.findById(id);
+        List<QuestionModel> questionsFromDB = quiz.get().getQuestions();
+        List<QuestionWrapper> questionsForUser = new java.util.ArrayList<>();
+        for(QuestionModel q : questionsFromDB) {
+            QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
+            questionsForUser.add(qw);
+        }
+
+        return new ResponseEntity<>(questionsForUser, HttpStatus.OK);
     }
 }
