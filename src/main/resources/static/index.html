@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizCraft - Modern Quiz Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="logo-text">Quiz<span>Craft</span></span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-tab="dashboard" id="nav-dashboard">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-tab="create-quiz" id="nav-create-quiz">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Create Quiz</span>
+                </a>
+                <a href="#" class="nav-link" data-tab="question-bank" id="nav-question-bank">
+                    <i class="fa-solid fa-database"></i>
+                    <span>Question Bank</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Guest User</span>
+                        <span class="user-role">Quiz Taker</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <h1 class="page-title" id="current-view-title">Dashboard</h1>
+                <div class="header-actions">
+                    <div class="theme-badge">
+                        <i class="fa-solid fa-moon"></i>
+                        <span>Dark Mode Active</span>
+                    </div>
+                    <button class="btn btn-secondary btn-icon" id="btn-refresh-data" title="Refresh Data">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Tab -->
+            <section id="tab-dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stat-total-quizzes">0</h3>
+                            <p>Available Quizzes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stat-total-questions">0</h3>
+                            <p>Total Questions</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-tags"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stat-categories-count">0</h3>
+                            <p>Active Categories</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-layout">
+                    <!-- Left: Active Quizzes -->
+                    <div class="dashboard-panel main-panel">
+                        <div class="panel-header">
+                            <h2>Select a Quiz to Play</h2>
+                            <span class="badge" id="quiz-count-badge">0 Quizzes</span>
+                        </div>
+                        <div class="quiz-grid" id="quizzes-container">
+                            <!-- Quizzes loaded dynamically -->
+                            <div class="loading-state">
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                <p>Loading quizzes...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick Actions / Instructions -->
+                    <div class="dashboard-panel side-panel">
+                        <div class="panel-header">
+                            <h2>Quick Guide</h2>
+                        </div>
+                        <div class="guide-content">
+                            <div class="guide-step">
+                                <span class="step-num">1</span>
+                                <div class="step-desc">
+                                    <h4>Seed Questions</h4>
+                                    <p>Go to the **Question Bank** and make sure you have questions added for different categories.</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <span class="step-num">2</span>
+                                <div class="step-desc">
+                                    <h4>Generate a Quiz</h4>
+                                    <p>Go to **Create Quiz**, name your quiz, pick a category, and specify the number of questions.</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <span class="step-num">3</span>
+                                <div class="step-desc">
+                                    <h4>Test Your Brain</h4>
+                                    <p>Select your newly created quiz from the **Dashboard** and start playing!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create Quiz Tab -->
+            <section id="tab-create-quiz" class="tab-content">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-icon">
+                            <i class="fa-solid fa-magic-wand-sparkles"></i>
+                        </div>
+                        <div>
+                            <h2>Generate Custom Quiz</h2>
+                            <p>Instantly bundle questions into a play-ready quiz from the database.</p>
+                        </div>
+                    </div>
+                    <form id="quiz-generator-form">
+                        <div class="form-group">
+                            <label for="quiz-title">Quiz Title</label>
+                            <input type="text" id="quiz-title" placeholder="e.g., Spring Boot Basics" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quiz-category">Category</label>
+                                <select id="quiz-category" required>
+                                    <option value="" disabled selected>Select category...</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quiz-num-q">Number of Questions</label>
+                                <input type="number" id="quiz-num-q" min="1" max="20" value="5" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" id="btn-create-quiz-submit">
+                            <i class="fa-solid fa-sparkles"></i> Create Quiz
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Question Bank Tab -->
+            <section id="tab-question-bank" class="tab-content">
+                <div class="bank-layout">
+                    <!-- Left: Questions List -->
+                    <div class="bank-list-panel">
+                        <div class="filter-bar">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="search-questions" placeholder="Search questions...">
+                            </div>
+                            <select id="filter-category">
+                                <option value="all">All Categories</option>
+                                <!-- Categories populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <div class="questions-list-wrapper" id="questions-list-container">
+                            <!-- Loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Add New Question Form -->
+                    <div class="bank-form-panel">
+                        <div class="form-container mini">
+                            <div class="form-header">
+                                <div class="form-icon purple">
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+                                <div>
+                                    <h2>Add Question</h2>
+                                    <p>Expand the database question bank</p>
+                                </div>
+                            </div>
+                            <form id="add-question-form">
+                                <div class="form-group">
+                                    <label for="q-title">Question Prompt</label>
+                                    <textarea id="q-title" rows="2" placeholder="e.g., What is Dependency Injection in Spring?" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="q-category">Category</label>
+                                        <input type="text" id="q-category" placeholder="e.g., Java, Python" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="q-difficulty">Difficulty</label>
+                                        <select id="q-difficulty" required>
+                                            <option value="Easy" selected>Easy</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Hard">Hard</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="options-grid">
+                                    <div class="form-group">
+                                        <label for="q-opt1">Option 1</label>
+                                        <input type="text" id="q-opt1" placeholder="First option" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="q-opt2">Option 2</label>
+                                        <input type="text" id="q-opt2" placeholder="Second option" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="q-opt3">Option 3</label>
+                                        <input type="text" id="q-opt3" placeholder="Third option" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="q-opt4">Option 4</label>
+                                        <input type="text" id="q-opt4" placeholder="Fourth option" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="q-answer">Right Answer</label>
+                                    <select id="q-answer" required>
+                                        <option value="" disabled selected>Select the correct option...</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fa-solid fa-save"></i> Save Question
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Play Screen (Overlay-like fullscreen panel) -->
+            <section id="tab-quiz-play" class="quiz-play-view">
+                <div class="quiz-container">
+                    <!-- Quiz Progress Header -->
+                    <div class="quiz-progress-bar-container">
+                        <div class="quiz-progress-fill" id="quiz-progress-bar"></div>
+                    </div>
+                    
+                    <div class="quiz-header">
+                        <div>
+                            <span class="quiz-tag" id="play-quiz-category">Category</span>
+                            <h2 id="play-quiz-title">Quiz Title</h2>
+                        </div>
+                        <div class="quiz-timer">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="quiz-timer-text">00:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Question Area -->
+                    <div class="quiz-body">
+                        <div class="question-tracker">
+                            Question <span id="current-q-index">1</span> of <span id="total-q-count">5</span>
+                        </div>
+                        <h3 class="question-text" id="play-question-title">Loading Question...</h3>
+                        
+                        <div class="quiz-options" id="play-options-container">
+                            <!-- Dynamic Options -->
+                        </div>
+                    </div>
+
+                    <!-- Navigation Footer -->
+                    <div class="quiz-footer">
+                        <button class="btn btn-secondary" id="btn-quiz-prev" disabled>
+                            <i class="fa-solid fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn btn-primary" id="btn-quiz-next">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results View -->
+            <section id="tab-quiz-results" class="results-view">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h2>Quiz Finished!</h2>
+                        <p id="results-quiz-title">Quiz Title</p>
+                    </div>
+
+                    <!-- Circular Progress Chart -->
+                    <div class="chart-container">
+                        <svg class="score-ring" viewBox="0 0 120 120">
+                            <circle class="score-ring-bg" cx="60" cy="60" r="50" />
+                            <circle class="score-ring-progress" id="results-ring-progress" cx="60" cy="60" r="50" />
+                        </svg>
+                        <div class="score-text">
+                            <span id="results-score-value">0</span>
+                            <span id="results-score-percent">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="results-summary">
+                        <div class="summary-metric">
+                            <span class="label">Total Questions</span>
+                            <span class="value" id="results-summary-total">0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-metric">
+                            <span class="label">Correct Answers</span>
+                            <span class="value text-success" id="results-summary-correct">0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-metric">
+                            <span class="label">Incorrect Answers</span>
+                            <span class="value text-danger" id="results-summary-wrong">0</span>
+                        </div>
+                    </div>
+
+                    <div class="results-message" id="results-feedback-message">
+                        Excellent job!
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn btn-primary" id="btn-results-retry">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Retry Quiz
+                        </button>
+                        <button class="btn btn-secondary" id="btn-results-dashboard">
+                            <i class="fa-solid fa-house"></i> Go to Dashboard
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>

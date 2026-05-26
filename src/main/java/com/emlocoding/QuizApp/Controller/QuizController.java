@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.emlocoding.QuizApp.model.QuestionWrapper;
+import com.emlocoding.QuizApp.model.Response;
+import com.emlocoding.QuizApp.model.QuizInfoDto;
 import java.util.List;
 
 @RestController
 @RequestMapping("quiz")
+@CrossOrigin
 public class QuizController {
 
     @Autowired
@@ -27,5 +32,15 @@ public class QuizController {
     @GetMapping("get/{id}")
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(@PathVariable Integer id) {
         return quizService.getQuizQuestions(id);
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<QuizInfoDto>> getAllQuizzes() {
+        return quizService.getAllQuizzes();
+    }
+
+    @PostMapping("submit/{id}")
+    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses) {
+        return quizService.calculateResult(id, responses);
     }
 }
